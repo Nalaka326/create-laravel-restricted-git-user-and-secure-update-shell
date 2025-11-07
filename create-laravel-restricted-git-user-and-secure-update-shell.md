@@ -4,8 +4,7 @@ sudo apt install git -y
 
 Verify installation:
 git --version
-
-—-------------------------------------------------------------------
+—-------------------------------------------------------------
 
 Create a restricted SSH user who can only run the above commands inside your project folder, e.g.:
 /var/www/html/wfms
@@ -21,7 +20,7 @@ Step 3 — Set proper folder permissions
 sudo chmod -R 775 /var/www/html/wfms
 sudo chown -R ftp_wfms:ftp_wfms /var/www/html/wfms
 
-Step 5 — Restrict shell access
+Step 4 — Restrict shell access
 # Replace their shell with a restricted shell script:
 sudo nano /usr/local/bin/restricted-wfms.sh
 
@@ -132,13 +131,13 @@ done
 
 
 
-Step 6 — Convert CRLF (if script was edited on Windows)
+Step 5 — Convert CRLF (if script was edited on Windows)
 sudo sed -i 's/\r$//' /usr/local/bin/restricted-wfms.sh
 
 Step 6 — Then make it executable:
 sudo chmod 755 /usr/local/bin/restricted-wfms.sh
 
-Step 6 — Add your custom shell
+Step 7 — Add your custom shell
 echo "/usr/local/bin/restricted-wfms.sh" | sudo tee -a /etc/shells
 cat /etc/shells
 You must now see this line at the bottom:
@@ -146,32 +145,32 @@ You must now see this line at the bottom:
 
 
 
-Step 6 — Make sure the user uses this shell
+Step 8 — Make sure the user uses this shell
 sudo usermod -s /usr/local/bin/restricted-wfms.sh git-wfms
 
-Step 7 — The directories Laravel needs writable permission:
+Step 9 — The directories Laravel needs writable permission:
 sudo chmod -R 775 /var/www/html/wfms/storage /var/www/html/wfms/bootstrap/cache
 Ensure new files inherit group:  (ftp_wfms)
 sudo find /var/www/html/wfms -type d -exec chmod g+s {} \;
 
-Step 8 — Test without PuTTY for find errors:
+Step 10 — Test without PuTTY for find errors:
 sudo su - git-wfms
 
-Step 8 — Test in PuTTY
+Step 11 — Test in PuTTY
 # Now open PuTTY and log in as:
 Username: git-wfms
 Password: <password>
 
 Pick a number and it will execute that command inside /var/www/html/wfms.
-—----------------------------------------------------------------------------------
+—-------------------------------------------------------------
 
 Log Configurations.
-Step 9 — Set correct permissions for new log file
+Step 12 — Set correct permissions for new log file
 sudo touch /var/log/git-wfms.log
 sudo chown ftp_wfms:ftp_wfms /var/log/git-wfms.log
 sudo chmod 664 /var/log/git-wfms.log
 
-Step 10 —Now log in via PuTTY again:
+Step 13 —Now log in via PuTTY again:
 # Now open PuTTY and log in as:
 Username: git-wfms
 Password: <password>
@@ -184,7 +183,7 @@ sudo tail /var/log/git-wfms.log
 # should see something like:
 [2025-10-24 18:57:33] git-wfms ran: php artisan optimize:clear
 
-—----------------------------------------------------------------------------------
+—-------------------------------------------------------------
 
 Rename the user
 sudo usermod -l git-wfms devuser
@@ -192,7 +191,7 @@ sudo usermod -d /home/git-wfms -m git-wfms
 
 Update the restricted shell:
 sudo usermod -s /usr/local/bin/restricted-wfms.sh git-wfms
-—----------------------------------------------------------------------------------
+—-------------------------------------------------------------
 
 Enable Secondary SSH port for git user:
 sudo nano /etc/ssh/sshd_config
