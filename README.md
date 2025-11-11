@@ -254,6 +254,6 @@ sudo systemctl restart ssh
 
 ---
 
-**Author:** Admin  
+**Author:** Nalaka326
 **Last Updated:** November 2025  
 **Tested on:** Ubuntu Server 24.04
