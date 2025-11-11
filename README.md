@@ -17,7 +17,7 @@ git --version
 ## 👤 Step 2 — Create the Restricted User
 
 ```bash
-sudo adduser git-wfms
+sudo adduser **git-wfms**
 sudo usermod -aG ftp_wfms git-wfms
 ```
 
