@@ -177,7 +177,7 @@ Host: <your server>
 User: git-wfms
 Port: 22
 ```
-
+![Description of image](screenshots/screenshot1.png)
 ---
 
 ## 🪵 Step 8 — Configure Logging
