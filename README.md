@@ -4,7 +4,7 @@ This guide explains how to create a **restricted SSH user (`git-wfms`)** who can
 
 ---
 
-## 🧩 Step 1 — Install Git Client
+## 🧩 Step 1 — Install Git Client (Optional)
 
 ```bash
 sudo apt update
