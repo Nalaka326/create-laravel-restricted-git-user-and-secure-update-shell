@@ -159,9 +159,13 @@ sudo usermod -s /usr/local/bin/restricted-wfms.sh git-wfms
 
 ```bash
 sudo chmod -R 775 /var/www/html/wfms/storage /var/www/html/wfms/bootstrap/cache
+```
+Setgid (g+s) permission:
+```bash
 sudo find /var/www/html/wfms -type d -exec chmod g+s {} \;
 ```
-
+Any new files or folders created inside it will automatically belong to the same group as the directory.
+Useful for shared project folders where multiple users collaborate.
 ---
 
 ## 🧪 Step 7 — Test the Restricted Shell
