@@ -248,8 +248,6 @@ sudo systemctl restart ssh
 
 ✅ **Now you can log in using port 2223** and safely run only the allowed Git, Composer, and Artisan commands.
 
----
-
 **Author:** Nalaka326     
 **Last Updated:** November 2025  
 **Tested on:** Ubuntu Server 24.04
