@@ -184,7 +184,7 @@ Port: 22
 ![Description of image](screenshots/Screenshot1.png)
 ---
 
-## 🪵 Step 8 — Configure Logs
+## 🪵📜 Step 8 — Configure Logs
 
 ```bash
 sudo touch /var/log/git-wfms.log
@@ -198,10 +198,11 @@ To verify:
 sudo tail /var/log/git-wfms.log
 ```
 
-Example output:
+📜 Example output:
 
 ```
-[2025-10-24 18:57:33] git-wfms ran: php artisan optimize:clear
+[2025-10-24 18:57:33] git-wfms ran: php artisan optimize:clear  
+[2025-10-24 19:01:10] git-wfms ran: git pull
 ```
 
 ---
@@ -248,13 +249,6 @@ sudo systemctl restart ssh
 ✅ **Now you can log in using port 2223** and safely run only the allowed Git, Composer, and Artisan commands.
 
 ---
-
-### 📜 Log File Sample
-
-```
-[2025-10-24 18:57:33] git-wfms ran: php artisan optimize:clear
-[2025-10-24 19:01:10] git-wfms ran: git pull
-```
 
 ---
 
