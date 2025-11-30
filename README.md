@@ -243,7 +243,7 @@ Then verify and restart:
 sudo sshd -t
 sudo systemctl restart ssh
 ```
-✅ **Now you can log in using port 2223** and safely run only the allowed Git, Composer, and Artisan commands.
+✅ Now you can log in using port 2223** and safely run only the allowed Git, Composer, and Artisan commands.
 ---
 
 **Author:** Nalaka326     
