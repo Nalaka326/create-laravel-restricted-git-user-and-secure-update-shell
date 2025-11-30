@@ -164,7 +164,7 @@ Setgid (g+s) permission:
 ```bash
 sudo find /var/www/html/wfms -type d -exec chmod g+s {} \;
 ```
-Any new files or folders created inside it will automatically belong to the same group as the directory.
+Any new files or folders created inside it will automatically belong to the same group as the directory.       
 Useful for shared project folders where multiple users collaborate.
 
 
