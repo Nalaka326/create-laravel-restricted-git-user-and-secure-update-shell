@@ -184,7 +184,7 @@ Port: 22
 ![Description of image](screenshots/Screenshot1.png)
 ---
 
-## 🪵 Step 8 — Configure Logging
+## 🪵 Step 8 — Configure Logs
 
 ```bash
 sudo touch /var/log/git-wfms.log
