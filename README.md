@@ -28,6 +28,7 @@ sudo usermod -aG ftp_wfms git-wfms
 ```bash
 sudo chmod -R 775 /var/www/html/wfms
 sudo chown -R ftp_wfms:ftp_wfms /var/www/html/wfms
+# Give full permission to /storage and /bootstrap/cache
 ```
 
 ---
