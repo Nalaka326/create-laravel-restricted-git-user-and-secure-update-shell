@@ -18,7 +18,7 @@ git --version
 
 ```bash
 sudo adduser git-wfms
-sudo usermod -aG ftp_wfms git-wfms
+sudo usermod -aG www-data git-wfms
 ```
 
 ---
@@ -27,7 +27,7 @@ sudo usermod -aG ftp_wfms git-wfms
 
 ```bash
 sudo chmod -R 775 /var/www/html/wfms
-sudo chown -R ftp_wfms:ftp_wfms /var/www/html/wfms
+sudo chown -R www-data:www-data /var/www/html/wfms
 ```
 
 ---
@@ -260,7 +260,7 @@ Port: 22
 
 ```bash
 sudo touch /var/log/git-wfms.log
-sudo chown ftp_wfms:ftp_wfms /var/log/git-wfms.log
+sudo chown www-data:www-data /var/log/git-wfms.log
 sudo chmod 664 /var/log/git-wfms.log
 ```
 
@@ -273,8 +273,8 @@ sudo tail /var/log/git-wfms.log
 📜 Example output:
 
 ```
-[2025-10-24 18:57:33] git-wfms ran: php artisan optimize:clear  
-[2025-10-24 19:01:10] git-wfms ran: git pull
+[2025-11-24 12:06:01] user=git-wfms ip=10.20.111.4 cmd="php artisan cache:clear" exit=0
+[2025-11-24 12:35:19] user=git-wfms ip=10.20.111.4 cmd="php artisan cache:clear" status=0
 ```
 
 ---
