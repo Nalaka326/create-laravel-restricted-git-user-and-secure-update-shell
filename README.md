@@ -28,8 +28,6 @@ sudo usermod -aG ftp_wfms git-wfms
 ```bash
 sudo chmod -R 775 /var/www/html/wfms
 sudo chown -R ftp_wfms:ftp_wfms /var/www/html/wfms
-
-# Give full permission to /storage and /bootstrap/cache
 ```
 
 ---
@@ -44,103 +42,175 @@ Paste the following:
 
 ```bash
 #!/bin/bash
-# Restricted shell for git-wfms user
+# =========================================
+# WFMS Restricted Developer Shell
+# =========================================
 
 WORKDIR="/var/www/html/wfms"
 LOGFILE="/var/log/git-wfms.log"
-USER=$(whoami)
 
-cd "$WORKDIR" || { echo "Project folder not found"; exit 1; }
+USER_NAME=$(whoami)
+CLIENT_IP=$(echo "$SSH_CONNECTION" | awk '{print $1}')
 
-# Colors
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[1;34m'
-NC='\033[0m' # No Color
+# Use safe PATH
+PATH="/usr/bin:/bin:/usr/local/bin"
 
-# Log helper
-log_action() {
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $USER ran: $1" >> "$LOGFILE"
+cd "$WORKDIR" || {
+    echo "ERROR: Project directory not found"
+    exit 1
 }
 
-# Non-interactive SSH command
-if [ -n "$SSH_ORIGINAL_COMMAND" ]; then
-    case "$SSH_ORIGINAL_COMMAND" in
-        "git pull"|"git push"|"composer update"|"php artisan db:seed --class=ProvinceSeeder"|"php artisan db:seed --class=DistrictSeeder"|"php artisan db:seed --class=PermissionTableSeeder"|"php artisan db:seed --class=StatusSeeder"|"php artisan optimize:clear"|"php artisan cache:clear"|"php artisan config:cache"|"php artisan config:clear"|"php artisan route:cache"|"php artisan route:clear"|"php artisan view:cache"|"php artisan view:clear"|"php artisan storage:link"|"php artisan filament:clear-cached-components"|"php artisan livewire:clear"|"npm install")
-            log_action "$SSH_ORIGINAL_COMMAND"
-            eval "$SSH_ORIGINAL_COMMAND"
+# ---------- Logging ----------
+log_action() {
+    local CMD="$1"
+    local STATUS="$2"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] user=$USER_NAME ip=$CLIENT_IP cmd=\"$CMD\" status=$STATUS" >> "$LOGFILE"
+}
+
+# ---------- Allowed Commands ----------
+run_command() {
+    local CMD="$1"
+    echo "-----------------------------------------"
+    echo "Running: $CMD"
+    echo
+
+    case "$CMD" in
+        "npm install")
+            /usr/bin/npm install
+            ;;
+        "composer update")
+            /usr/bin/composer update
+            ;;
+        "git pull")
+            /usr/bin/git pull
+            ;;
+        "git push")
+            /usr/bin/git push
+            ;;
+        "php artisan cache:clear")
+            /usr/bin/php artisan cache:clear
+            ;;
+        "php artisan config:clear")
+            /usr/bin/php artisan config:clear
+            ;;
+        "php artisan config:cache")
+            /usr/bin/php artisan config:cache
+            ;;
+        "php artisan route:clear")
+            /usr/bin/php artisan route:clear
+            ;;
+        "php artisan route:cache")
+            /usr/bin/php artisan route:cache
+            ;;
+        "php artisan view:clear")
+            /usr/bin/php artisan view:clear
+            ;;
+        "php artisan view:cache")
+            /usr/bin/php artisan view:cache
+            ;;
+        "php artisan optimize:clear")
+            /usr/bin/php artisan optimize:clear
+            ;;
+        "php artisan storage:link")
+            /usr/bin/php artisan storage:link
+            ;;
+        "php artisan livewire:clear")
+            /usr/bin/php artisan livewire:clear
+            ;;
+        "php artisan filament:clear-cached-components")
+            /usr/bin/php artisan filament:clear-cached-components
+            ;;
+        "php artisan db:seed --class=ProvinceSeeder")
+            /usr/bin/php artisan db:seed --class=ProvinceSeeder
+            ;;
+        "php artisan db:seed --class=DistrictSeeder")
+            /usr/bin/php artisan db:seed --class=DistrictSeeder
+            ;;
+        "php artisan db:seed --class=PermissionTableSeeder")
+            /usr/bin/php artisan db:seed --class=PermissionTableSeeder
+            ;;
+        "php artisan db:seed --class=StatusSeeder")
+            /usr/bin/php artisan db:seed --class=StatusSeeder
             ;;
         *)
-            echo -e "${RED}Access denied:${NC} '$SSH_ORIGINAL_COMMAND' not allowed."
+            echo "ERROR: Command not allowed"
+            return 127
             ;;
     esac
-    exit 0
+
+    STATUS=$?
+    log_action "$CMD" "$STATUS"
+
+    echo
+    echo "-----------------------------------------"
+}
+
+# ---------- Direct SSH command ----------
+if [ -n "$SSH_ORIGINAL_COMMAND" ]; then
+    run_command "$SSH_ORIGINAL_COMMAND"
+    exit
 fi
 
-# Interactive Menu
+# ---------- Interactive Menu ----------
 while true; do
-    clear
-    echo -e "${BLUE}=========================================${NC}"
-    echo -e "${YELLOW}     WFMS Developer Console${NC}"
-    echo -e "${BLUE}=========================================${NC}"
-    echo
-    echo -e "${GREEN}Allowed commands:${NC}"
-    echo "1) git pull"
-    echo "2) git push"
-    echo "3) composer update"
-    echo "4) php artisan db:seed --class=ProvinceSeeder"
-    echo "5) php artisan db:seed --class=DistrictSeeder"
-    echo "6) php artisan db:seed --class=PermissionTableSeeder"
-    echo "7) php artisan db:seed --class=StatusSeeder"
-    echo "8) php artisan optimize:clear"
-    echo "9) php artisan cache:clear"
-    echo "10) php artisan config:cache"
-    echo "11) php artisan config:clear"
-    echo "12) php artisan route:cache"
-    echo "13) php artisan route:clear"
-    echo "14) php artisan view:cache"
-    echo "15) php artisan view:clear"
-    echo "16) php artisan storage:link"
-    echo "17) php artisan filament:clear-cached-components"
-    echo "18) php artisan livewire:clear"
-    echo "19) npm install"
-    echo "20) Exit"
-    echo
-    read -p "Choose an option: " choice
+clear
+cat <<EOF
+=========================================
+     WFMS Developer Console
+=========================================
 
-    case $choice in
-        1) cmd="git pull" ;;
-        2) cmd="git push" ;;
-        3) cmd="composer update" ;;
-        4) cmd="php artisan db:seed --class=ProvinceSeeder" ;;
-        5) cmd="php artisan db:seed --class=DistrictSeeder" ;;
-        6) cmd="php artisan db:seed --class=PermissionTableSeeder" ;;
-        7) cmd="php artisan db:seed --class=StatusSeeder" ;;
-        8) cmd="php artisan optimize:clear" ;;
-        9) cmd="php artisan cache:clear" ;;
-        10) cmd="php artisan config:cache" ;;
-        11) cmd="php artisan config:clear" ;;
-        12) cmd="php artisan route:cache" ;;
-        13) cmd="php artisan route:clear" ;;
-        14) cmd="php artisan view:cache" ;;
-        15) cmd="php artisan view:clear" ;;
-        16) cmd="php artisan storage:link" ;;
-        17) cmd="php artisan filament:clear-cached-components" ;;
-        18) cmd="php artisan livewire:clear" ;;
-        19) cmd="npm install" ;;
-        20) echo -e "${YELLOW}Goodbye!${NC}"; exit 0 ;;
-        *) echo -e "${RED}Invalid option. Try again.${NC}"; continue ;;
-    esac
+Allowed commands:
+1) npm install
+2) composer update
+3) git pull
+4) git push
+5) php artisan cache:clear
+6) php artisan config:clear
+7) php artisan config:cache
+8) php artisan route:clear
+9) php artisan route:cache
+10) php artisan view:clear
+11) php artisan view:cache
+12) php artisan optimize:clear
+13) php artisan storage:link
+14) php artisan livewire:clear
+15) php artisan filament:clear-cached-components
+16) php artisan db:seed --class=ProvinceSeeder
+17) php artisan db:seed --class=DistrictSeeder
+18) php artisan db:seed --class=PermissionTableSeeder
+19) php artisan db:seed --class=StatusSeeder
+20) Exit
 
-    echo -e "${YELLOW}-----------------------------------------${NC}"
-    echo -e "${GREEN}Running:${NC} $cmd"
-    log_action "$cmd"
-    eval "$cmd"
-    echo -e "${YELLOW}-----------------------------------------${NC}"
+EOF
 
-    echo
-    read -p "Press Enter to continue..." tmp
+read -rp "Choose an option: " CHOICE
+
+case "$CHOICE" in
+    1) CMD="npm install" ;;
+    2) CMD="composer update" ;;
+    3) CMD="git pull" ;;
+    4) CMD="git push" ;;
+    5) CMD="php artisan cache:clear" ;;
+    6) CMD="php artisan config:clear" ;;
+    7) CMD="php artisan config:cache" ;;
+    8) CMD="php artisan route:clear" ;;
+    9) CMD="php artisan route:cache" ;;
+    10) CMD="php artisan view:clear" ;;
+    11) CMD="php artisan view:cache" ;;
+    12) CMD="php artisan optimize:clear" ;;
+    13) CMD="php artisan storage:link" ;;
+    14) CMD="php artisan livewire:clear" ;;
+    15) CMD="php artisan filament:clear-cached-components" ;;
+    16) CMD="php artisan db:seed --class=ProvinceSeeder" ;;
+    17) CMD="php artisan db:seed --class=DistrictSeeder" ;;
+    18) CMD="php artisan db:seed --class=PermissionTableSeeder" ;;
+    19) CMD="php artisan db:seed --class=StatusSeeder" ;;
+    20) echo "Goodbye"; exit 0 ;;
+    *) echo "Invalid option"; sleep 1; continue ;;
+esac
+
+run_command "$CMD"
+read -rp "Press Enter to continue..."
 done
 ```
 
@@ -160,7 +230,7 @@ sudo usermod -s /usr/local/bin/restricted-wfms.sh git-wfms
 ## 📂 Step 6 — Laravel Writable Directories
 
 ```bash
-sudo chmod -R 775 /var/www/html/wfms/storage /var/www/html/wfms/bootstrap/cache
+sudo chmod -R 777 /var/www/html/wfms/storage /var/www/html/wfms/bootstrap/cache
 ```
 Setgid (g+s) permission:
 ```bash
