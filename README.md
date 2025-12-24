@@ -19,6 +19,8 @@ git --version
 ```bash
 sudo adduser git-wfms
 sudo usermod -aG www-data git-wfms
+
+# username = git-wfms
 ```
 
 ---
