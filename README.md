@@ -333,7 +333,7 @@ This issue is usually caused by systemd socket activation (ssh.socket), which fo
 ```bash
 systemctl status ssh.socket
 ```
-If the status shows active (listening), continue to the next step.
+If the status shows **active** (listening), continue to the next step.
 
 2. Disable SSH socket activation
 ```bash
@@ -361,7 +361,7 @@ LISTEN 0.0.0.0:2224
 LISTEN [::]:22
 LISTEN [::]:2224
 ```
-Notes
+✅ Notes:
 
 * Masking ssh.socket does not reduce security
 * This is required to allow multiple SSH ports
