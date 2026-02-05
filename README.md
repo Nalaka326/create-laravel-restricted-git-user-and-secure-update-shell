@@ -321,6 +321,7 @@ sudo systemctl restart ssh
 sudo chmod -R 777 /var/www/html/wfms/storage /var/www/html/wfms/bootstrap/cache
 ```
 ✅ Now you can log in using port **2223** and safely run only the allowed Git, Composer, and Artisan commands.
+
 ---
 ## Troubleshooting: Cannot log in via SSH port 2224 (Ubuntu 24.04)
 
