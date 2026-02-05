@@ -321,7 +321,50 @@ sudo systemctl restart ssh
 sudo chmod -R 777 /var/www/html/wfms/storage /var/www/html/wfms/bootstrap/cache
 ```
 ✅ Now you can log in using port **2223** and safely run only the allowed Git, Composer, and Artisan commands.
+---
+## Troubleshooting: Cannot log in via SSH port 2224 (Ubuntu 24.04)
 
+If you cannot connect to SSH using port 2224, follow the steps below exactly.
+This issue is usually caused by systemd socket activation (ssh.socket), which forces SSH to listen only on port 22.
+
+## Final Fix (do this exactly)
+1. Check SSH socket status
+```bash
+systemctl status ssh.socket
+```
+If the status shows active (listening), continue to the next step.
+
+2. Disable SSH socket activation
+```bash
+sudo systemctl stop ssh.socket
+sudo systemctl disable ssh.socket
+```
+Optional but recommended (prevents future overrides):
+```bash
+sudo systemctl mask ssh.socket
+```
+
+3. Restart the SSH service
+```bash
+sudo systemctl restart ssh
+```
+
+4. Verify SSH is listening on both ports
+```bash
+sudo ss -tlnp | grep ssh
+```
+Expected output:
+```bash
+LISTEN 0.0.0.0:22
+LISTEN 0.0.0.0:2224
+LISTEN [::]:22
+LISTEN [::]:2224
+```
+Notes
+
+* Masking ssh.socket does not reduce security
+* This is required to allow multiple SSH ports
+* SSH configuration is controlled by sshd_config, not ssh.socket
 ---
 **Author:** Nalaka326     
 **Last Updated:** November 2025  
