@@ -134,6 +134,9 @@ run_command() {
         "php artisan db:seed --class=StatusSeeder")
             /usr/bin/php artisan db:seed --class=StatusSeeder
             ;;
+        "php artisan migrate")
+            /usr/bin/php artisan migrate
+            ;;
         *)
             echo "ERROR: Command not allowed"
             return 127
@@ -181,7 +184,8 @@ Allowed commands:
 17) php artisan db:seed --class=DistrictSeeder
 18) php artisan db:seed --class=PermissionTableSeeder
 19) php artisan db:seed --class=StatusSeeder
-20) Exit
+20) php artisan migrate
+21) Exit
 
 EOF
 
@@ -207,7 +211,8 @@ case "$CHOICE" in
     17) CMD="php artisan db:seed --class=DistrictSeeder" ;;
     18) CMD="php artisan db:seed --class=PermissionTableSeeder" ;;
     19) CMD="php artisan db:seed --class=StatusSeeder" ;;
-    20) echo "Goodbye"; exit 0 ;;
+    20) CMD="php artisan migrate" ;;
+    21) echo "Goodbye"; exit 0 ;;
     *) echo "Invalid option"; sleep 1; continue ;;
 esac
 
