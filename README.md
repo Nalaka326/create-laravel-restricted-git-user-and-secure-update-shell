@@ -308,6 +308,7 @@ Add at the bottom:
 Port 22
 Port 2223
 
+# Restricted Git-WFMS user
 Match User git-wfms
     ForceCommand /usr/local/bin/restricted-wfms.sh
     AllowTcpForwarding no
