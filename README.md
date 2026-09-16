@@ -77,70 +77,125 @@ run_command() {
     echo
 
     case "$CMD" in
-        "npm install")
-            /usr/bin/npm install
-            ;;
-        "composer update")
-            /usr/bin/composer update
-            ;;
-        "git pull")
-            /usr/bin/git pull
-            ;;
-        "git push")
-            /usr/bin/git push
-            ;;
-        "php artisan cache:clear")
-            /usr/bin/php artisan cache:clear
-            ;;
-        "php artisan config:clear")
-            /usr/bin/php artisan config:clear
-            ;;
-        "php artisan config:cache")
-            /usr/bin/php artisan config:cache
-            ;;
-        "php artisan route:clear")
-            /usr/bin/php artisan route:clear
-            ;;
-        "php artisan route:cache")
-            /usr/bin/php artisan route:cache
-            ;;
-        "php artisan view:clear")
-            /usr/bin/php artisan view:clear
-            ;;
-        "php artisan view:cache")
-            /usr/bin/php artisan view:cache
-            ;;
-        "php artisan optimize:clear")
-            /usr/bin/php artisan optimize:clear
-            ;;
-        "php artisan storage:link")
-            /usr/bin/php artisan storage:link
-            ;;
-        "php artisan livewire:clear")
-            /usr/bin/php artisan livewire:clear
-            ;;
-        "php artisan filament:clear-cached-components")
-            /usr/bin/php artisan filament:clear-cached-components
-            ;;
-        "php artisan db:seed --class=ProvinceSeeder")
-            /usr/bin/php artisan db:seed --class=ProvinceSeeder
-            ;;
-        "php artisan db:seed --class=DistrictSeeder")
-            /usr/bin/php artisan db:seed --class=DistrictSeeder
-            ;;
-        "php artisan db:seed --class=PermissionTableSeeder")
-            /usr/bin/php artisan db:seed --class=PermissionTableSeeder
-            ;;
-        "php artisan db:seed --class=StatusSeeder")
-            /usr/bin/php artisan db:seed --class=StatusSeeder
-            ;;
-        "php artisan migrate")
-            /usr/bin/php artisan migrate
-            ;;
-        *)
-            echo "ERROR: Command not allowed"
-            return 127
-            ;;
+"npm install")
+    /usr/bin/npm install
+    ;;
+
+"composer install")
+    /usr/bin/composer install
+    ;;
+
+"composer --version")
+    /usr/bin/composer --version
+    ;;
+
+"composer update")
+    /usr/bin/composer update
+    ;;
+
+"composer show | grep -i pdf")
+    /usr/bin/composer show | grep -i pdf
+    ;;
+
+"composer show barryvdh/laravel-dompdf")
+    /usr/bin/composer show barryvdh/laravel-dompdf
+    ;;
+
+"composer install --no-dev --optimize-autoloader")
+    /usr/bin/composer install --no-dev --optimize-autoloader
+    ;;
+
+"composer show maatwebsite/excel")
+    /usr/bin/composer show maatwebsite/excel
+    ;;
+
+"composer show phpoffice/phpspreadsheet")
+    /usr/bin/composer show phpoffice/phpspreadsheet
+    ;;
+
+"composer dump-autoload -o")
+    /usr/bin/composer dump-autoload -o
+    ;;
+
+"git pull")
+    /usr/bin/git pull
+    ;;
+
+"git push")
+    /usr/bin/git push
+    ;;
+
+"php artisan cache:clear")
+    /usr/bin/php artisan cache:clear
+    ;;
+
+"php artisan config:clear")
+    /usr/bin/php artisan config:clear
+    ;;
+
+"php artisan config:cache")
+    /usr/bin/php artisan config:cache
+    ;;
+
+"php artisan route:clear")
+    /usr/bin/php artisan route:clear
+    ;;
+
+"php artisan route:cache")
+    /usr/bin/php artisan route:cache
+    ;;
+
+"php artisan view:clear")
+    /usr/bin/php artisan view:clear
+    ;;
+
+"php artisan view:cache")
+    /usr/bin/php artisan view:cache
+    ;;
+
+"php artisan optimize:clear")
+    /usr/bin/php artisan optimize:clear
+    ;;
+
+"php artisan optimize")
+    /usr/bin/php artisan optimize
+    ;;
+
+"php artisan storage:link")
+    /usr/bin/php artisan storage:link
+    ;;
+
+"php artisan livewire:clear")
+    /usr/bin/php artisan livewire:clear
+    ;;
+
+"php artisan filament:clear-cached-components")
+    /usr/bin/php artisan filament:clear-cached-components
+    ;;
+
+"php artisan db:seed --class=ProvinceSeeder")
+    /usr/bin/php artisan db:seed --class=ProvinceSeeder
+    ;;
+
+"php artisan db:seed --class=DistrictSeeder")
+    /usr/bin/php artisan db:seed --class=DistrictSeeder
+    ;;
+
+"php artisan db:seed --class=PermissionTableSeeder")
+    /usr/bin/php artisan db:seed --class=PermissionTableSeeder
+    ;;
+
+"php artisan db:seed --class=StatusSeeder")
+    /usr/bin/php artisan db:seed --class=StatusSeeder
+    ;;
+
+"php artisan migrate")
+    /usr/bin/php artisan migrate
+    ;;
+*)
+    echo "ERROR: Command not allowed"
+    return 127
+    ;;
     esac
 
     STATUS=$?
@@ -166,53 +221,71 @@ cat <<EOF
 
 Allowed commands:
 1) npm install
-2) composer update
-3) git pull
-4) git push
-5) php artisan cache:clear
-6) php artisan config:clear
-7) php artisan config:cache
-8) php artisan route:clear
-9) php artisan route:cache
-10) php artisan view:clear
-11) php artisan view:cache
-12) php artisan optimize:clear
-13) php artisan storage:link
-14) php artisan livewire:clear
-15) php artisan filament:clear-cached-components
-16) php artisan db:seed --class=ProvinceSeeder
-17) php artisan db:seed --class=DistrictSeeder
-18) php artisan db:seed --class=PermissionTableSeeder
-19) php artisan db:seed --class=StatusSeeder
-20) php artisan migrate
-21) Exit
+2) composer install
+3) composer --version
+4) composer update
+5) composer show | grep -i pdf
+6) composer show barryvdh/laravel-dompdf
+7) composer install --no-dev --optimize-autoloader
+8) composer show maatwebsite/excel
+9) composer show phpoffice/phpspreadsheet
+10) composer dump-autoload -o
+11) git pull
+12) git push
+13) php artisan cache:clear
+14) php artisan config:clear
+15) php artisan config:cache
+16) php artisan route:clear
+17) php artisan route:cache
+18) php artisan view:clear
+19) php artisan view:cache
+20) php artisan optimize:clear
+21) php artisan optimize
+22) php artisan storage:link
+23) php artisan livewire:clear
+24) php artisan filament:clear-cached-components
+25) php artisan db:seed --class=ProvinceSeeder
+26) php artisan db:seed --class=DistrictSeeder
+27) php artisan db:seed --class=PermissionTableSeeder
+28) php artisan db:seed --class=StatusSeeder
+29) php artisan migrate
+30) Exit
 
 EOF
 
 read -rp "Choose an option: " CHOICE
 
 case "$CHOICE" in
-    1) CMD="npm install" ;;
-    2) CMD="composer update" ;;
-    3) CMD="git pull" ;;
-    4) CMD="git push" ;;
-    5) CMD="php artisan cache:clear" ;;
-    6) CMD="php artisan config:clear" ;;
-    7) CMD="php artisan config:cache" ;;
-    8) CMD="php artisan route:clear" ;;
-    9) CMD="php artisan route:cache" ;;
-    10) CMD="php artisan view:clear" ;;
-    11) CMD="php artisan view:cache" ;;
-    12) CMD="php artisan optimize:clear" ;;
-    13) CMD="php artisan storage:link" ;;
-    14) CMD="php artisan livewire:clear" ;;
-    15) CMD="php artisan filament:clear-cached-components" ;;
-    16) CMD="php artisan db:seed --class=ProvinceSeeder" ;;
-    17) CMD="php artisan db:seed --class=DistrictSeeder" ;;
-    18) CMD="php artisan db:seed --class=PermissionTableSeeder" ;;
-    19) CMD="php artisan db:seed --class=StatusSeeder" ;;
-    20) CMD="php artisan migrate" ;;
-    21) echo "Goodbye"; exit 0 ;;
+1) CMD="npm install" ;;
+2) CMD="composer install" ;;
+3) CMD="composer --version" ;;
+4) CMD="composer update" ;;
+5) CMD="composer show | grep -i pdf" ;;
+6) CMD="composer show barryvdh/laravel-dompdf" ;;
+7) CMD="composer install --no-dev --optimize-autoloader" ;;
+8) CMD="composer show maatwebsite/excel" ;;
+9) CMD="composer show phpoffice/phpspreadsheet" ;;
+10) CMD="composer dump-autoload -o" ;;
+11) CMD="git pull" ;;
+12) CMD="git push" ;;
+13) CMD="php artisan cache:clear" ;;
+14) CMD="php artisan config:clear" ;;
+15) CMD="php artisan config:cache" ;;
+16) CMD="php artisan route:clear" ;;
+17) CMD="php artisan route:cache" ;;
+18) CMD="php artisan view:clear" ;;
+19) CMD="php artisan view:cache" ;;
+20) CMD="php artisan optimize:clear" ;;
+21) CMD="php artisan optimize" ;;
+22) CMD="php artisan storage:link" ;;
+23) CMD="php artisan livewire:clear" ;;
+24) CMD="php artisan filament:clear-cached-components" ;;
+25) CMD="php artisan db:seed --class=ProvinceSeeder" ;;
+26) CMD="php artisan db:seed --class=DistrictSeeder" ;;
+27) CMD="php artisan db:seed --class=PermissionTableSeeder" ;;
+28) CMD="php artisan db:seed --class=StatusSeeder" ;;
+29) CMD="php artisan migrate" ;;
+30) echo "Goodbye"; exit 0 ;;
     *) echo "Invalid option"; sleep 1; continue ;;
 esac
 
